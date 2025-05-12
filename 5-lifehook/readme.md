@@ -51,7 +51,7 @@ Kubernetes 支持容器生命周期钩子（Lifecycle Hooks），即在容器启
 ### ✅ 示例：使用 `exec` 执行命令
 
 ```
-yamlCopyEditlifecycle:
+lifecycle:
   postStart:
     exec:
       command: ["sh", "-c", "echo Container started at $(date) >> /var/log/start.log"]
@@ -63,7 +63,7 @@ yamlCopyEditlifecycle:
 ### ✅ 示例：使用 `httpGet` 发送 HTTP 请求
 
 ```
-yamlCopyEditlifecycle:
+lifecycle:
   preStop:
     httpGet:
       path: /shutdown
@@ -89,7 +89,7 @@ yamlCopyEditlifecycle:
 ## 六、完整 Pod 示例
 
 ```
-yamlCopyEditapiVersion: v1
+apiVersion: v1
 kind: Pod
 metadata:
   name: lifecycle-demo

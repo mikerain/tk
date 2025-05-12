@@ -47,7 +47,7 @@ Kubernetes 提供了三种探针类型：
 **示例**（使用 HTTP 检查）：
 
 ```
-yamlCopyEditlivenessProbe:
+livenessProbe:
   httpGet:
     path: /healthz
     port: 8080
@@ -65,7 +65,7 @@ yamlCopyEditlivenessProbe:
 **示例**（使用 TCP 检查）：
 
 ```
-yamlCopyEditreadinessProbe:
+readinessProbe:
   tcpSocket:
     port: 3306
   initialDelaySeconds: 5
@@ -81,7 +81,7 @@ yamlCopyEditreadinessProbe:
 **示例**（使用 Exec 命令）：
 
 ```
-yamlCopyEditstartupProbe:
+startupProbe:
   exec:
     command:
     - cat
@@ -131,7 +131,7 @@ yamlCopyEditstartupProbe:
 ## 八、实际完整例子
 
 ```
-yamlCopyEditapiVersion: v1
+apiVersion: v1
 kind: Pod
 metadata:
   name: probe-demo
