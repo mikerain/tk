@@ -24,7 +24,7 @@ spec:
 
 
 
-使用prestop, 删除pod，记录pod的terminating时间是多少？60s左右
+使用prestop, 删除pod，记录pod的terminating时间是多少？60s左右(也可能是30s,取决于不同集群)
 
 再修改sleep 90，删除pod，记录pod的terminating时间是多少？也是60s，这是因为没有修改terminationGracePeriodSeconds
 
@@ -142,7 +142,7 @@ spec:
     spec:
       containers:
         - name: container
-          image: quay.io/qxu/logfile:hook
+          image: quay.io/qxu/logfile:hook2.0
 ```
 
 
@@ -180,9 +180,9 @@ spec:
 
 
 
-使用postart的页面显示效果
+使用postart的页面显示效果（内部请使用jfrog.png的图处）
 
-在页面上点击按钮，显示图片
+在页面上点击按钮，显示图片,
 
 ```
 apiVersion: apps/v1
@@ -201,7 +201,7 @@ spec:
     spec:
       containers:
         - name: container
-          image: quay.io/qxu/logfile:hook
+          image: quay.io/qxu/logfile:hook2.0
           lifecycle:
             postStart:
               exec:

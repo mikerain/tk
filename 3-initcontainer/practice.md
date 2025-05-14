@@ -15,7 +15,7 @@ spec:
   template:
     metadata:
       labels:
-        app: logfile
+        app: myapp
     spec:
       containers:
         - name: container
@@ -35,7 +35,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql
-  namespace: test
 spec:
   selector:
     app: mysql
@@ -144,7 +143,11 @@ spec:
 
 参见测试环境中mysql/redis的部署，此场景用于使用一个NFS共享，给多个不同实例的mysql/redis使用，每个实例使用不同目录。
 
-目录名在helm模板中使用变量方多自动替换
+目录名在helm模板中使用变量自动替换
+
+```
+ship-pre-t 项目
+```
 
 
 

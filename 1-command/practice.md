@@ -110,7 +110,7 @@ spec:
 
 
 
-### pod使用command/args覆盖dockerfile原有启动命令
+### 场景3 pod使用command/args覆盖dockerfile原有启动命令
 
 command and args:
 
@@ -195,12 +195,26 @@ spec:
 
 ```
 podman inspect quay.io/qxu/mysql
-        {
+
+{
                     "created": "2024-10-14T22:15:13Z",
                     "created_by": "ENTRYPOINT [\"docker-entrypoint.sh\"]",
                     "comment": "buildkit.dockerfile.v0",
                     "empty_layer": true
                },
+               {
+                    "created": "2024-10-14T22:15:13Z",
+                    "created_by": "EXPOSE map[3306/tcp:{} 33060/tcp:{}]",
+                    "comment": "buildkit.dockerfile.v0",
+                    "empty_layer": true
+               },
+               {
+                    "created": "2024-10-14T22:15:13Z",
+                    "created_by": "CMD [\"mysqld\"]",
+                    "comment": "buildkit.dockerfile.v0",
+                    "empty_layer": true
+               }
+
 ```
 
 
@@ -209,7 +223,7 @@ podman inspect quay.io/qxu/mysql
 
 ```shell
 sh-5.1$ ./docker-entrypoint.sh 
-sh-5.1$ ./docker-entrypoint.sh  -x
+sh-5.1$ ./docker-entrypoint.sh mysqld
 2025-04-28 01:52:55+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.40-1.el9 started.
 2025-04-28 01:52:56+00:00 [ERROR] [Entrypoint]: Database is uninitialized and password option is not specified
     You need to specify one of the following as an environment variable:
@@ -244,5 +258,16 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               value: '123456'
       
+```
+
+
+
+进入到容器内部测试
+
+```
+mysql 
+mysql -uroot -p123456
+show databases;
+
 ```
 

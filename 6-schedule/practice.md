@@ -171,7 +171,7 @@ spec:
         app: busybox
     spec:
       nodeSelector:
-        node-role.kubernetes.io/control-plane: ''
+        node-role.kubernetes.io/master: ''
       containers:
         - name: container
           image: quay.io/qxu/sleep
@@ -199,7 +199,7 @@ spec:
         operator: "Exists"
         effect: "NoSchedule"
       nodeSelector:
-        node-role.kubernetes.io/control-plane: ''
+        node-role.kubernetes.io/master: ''
       containers:
         - name: container
           image: quay.io/qxu/sleep
@@ -225,7 +225,7 @@ spec:
       tolerations:
       - operator: "Exists"
       nodeSelector:
-        node-role.kubernetes.io/control-plane: ''
+        node-role.kubernetes.io/master: ''
       containers:
         - name: container
           image: quay.io/qxu/sleep
@@ -268,4 +268,4 @@ spec:
 
 修改replicas的数量，超过work的数量，看能否部署成功？否
 
-然后修改maxskew为3，看能否部署成功？是
+然后修改maxskew为2，看能否部署成功？是, 当使用2时，最多可以部多少个pod?  可用的无污点node*maxskew

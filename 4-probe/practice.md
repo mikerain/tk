@@ -195,7 +195,7 @@ spec:
 
 
 
-添加超时配置,发现不再重启，但是pod处于ready状态，不是我们想要的结果：
+添加超时配置,发现不再重启，pod处于ready状态，不是我们想要的结果,因为只是避免了pod的不断重启而已。
 
 ```
 apiVersion: apps/v1
@@ -220,8 +220,8 @@ spec:
               path: /ready
               port: 5000
               scheme: HTTP
-              failureThreshold: 20
-              periodSeconds: 20  
+            failureThreshold: 20
+            periodSeconds: 20
   
 ```
 
@@ -229,7 +229,7 @@ spec:
 
 
 
-添加readniess配置
+添加readniess配置后，就会发现潜在的问题(新建立的pod不处于ready状态)
 
 检查pod是否ready?否，因为原有的代码有bug，在写ready检查接口时，不要简单的写time sleep,否则会使得检查超时
 

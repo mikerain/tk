@@ -77,7 +77,7 @@ spec:
 
 ### 场景3 修改deployment的默认升级方式
 
-
+观察pod,在旧的pod没有完全terminating之前，新的pod不会建立
 
 ```
 apiVersion: apps/v1
@@ -190,6 +190,6 @@ spec:
 
 
 
-在route界面上使用300秒的压力测试，查看pod是否自扩容
+在route界面上使用600秒的压力测试，查看pod是否自扩容，如果不自动扩容，多试几次。
 
 查看deployment的整体的metric

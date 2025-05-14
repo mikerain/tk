@@ -24,7 +24,9 @@ spec:
 
 
 
-使用sidecar容器，输出日志到console
+
+
+新建一个应用，使用sidecar容器，输出日志到console
 
 ```yaml
 apiVersion: apps/v1
@@ -140,7 +142,8 @@ spec:
           - name: shared
             mountPath: /shared
         - name: debug-sidecar
-          image: docker.io/library/openjdk:17.0-jdk-slim
+          #image: docker.io/library/openjdk:17.0-jdk-slim
+          image: public.ecr.aws/docker/library/openjdk:17.0-jdk-slim
           command: ["sleep", "infinity"]
           securityContext:
             capabilities:
