@@ -13,9 +13,10 @@ metadata:
   name: config-kv
 data:
   MYSQL_ROOT_PASSWORD: '123456'
+  DBNAME: test
 ```
 
-
+方式1
 
 ```
 apiVersion: apps/v1
@@ -44,6 +45,31 @@ spec:
 ```
 
 
+
+方式2
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 'mysql2'
+spec:
+  selector:
+    matchLabels:
+      app: mysql2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql2
+    spec:
+      containers:
+        - name: container
+          image: quay.io/qxu/mysql
+          envFrom:
+          - configMapRef:
+              name: config-kv
+```
 
 原来直接使用变量方式，修改变量，会引发应用重新部署，pod删除重建
 
@@ -257,8 +283,75 @@ spec:
 
 ### 示例4挂载configmap中的内容的更新，自动变更
 
+先在页面查询，确认可以成功查询
+
+ 先修改mysql的password,再查询，（f5,F10，disable network）,查询失败吗
+
+再修改 cm中的password,再查询，（F5，f10disable network）,查询失败吗，查询pod中configmap的内容，更新了吗？
+
+删除pod，再查询（F5，f10, disable network）
+
+```
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: cmdemo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cmdemo
+  template:
+    metadata:
+      labels:
+        app: cmdemo
+    spec:
+      volumes:
+        - name: cm-volume
+          configMap:
+            name: logfile-cm2
+      containers:
+        - name: cmdemo
+          image: quay.io/qxu/logfile:cm
+          volumeMounts:
+            - name: cm-volume
+              mountPath: /app/config
+```
 
 
 
+### 示例5 挂载configmap中的内容的更新，pod不自动变更
 
-### 示例5 挂载configmap中的内容的更新，不自动变更
+subPath参数的加载，不会自动更新cm到pod中
+
+```
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: cmdemo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cmdemo
+  template:
+    metadata:
+      labels:
+        app: cmdemo
+    spec:
+      volumes:
+        - name: cm-volume
+          configMap:
+            name: logfile-cm2
+      containers:
+        - name: cmdemo
+          image: quay.io/qxu/logfile:cm
+          volumeMounts:
+            - name: cm-volume
+              mountPath: /app/config/config.ini
+              subPath: config.ini
+            - name: cm-volume
+              mountPath: /tmp/db.conf
+              subPath: db.conf
+```
+
